@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Utilisation</title>
+</head>
+<body>
+  <h3>Guide rapide</h3>
+  <h2>Comment utiliser</h2>
+
+  <p>Depuis un <strong>dossier</strong> (trié alphabétiquement) :</p>
+  <pre><code>node slides-creator.js --input ./mes-pages --output slides.html</code></pre>
+
+  <p>Avec des <strong>fichiers explicites</strong> (ordre libre) :</p>
+  <pre><code>node slides-creator.js intro.html methode.html conclusion.html</code></pre>
+
+  <p>Toutes les <strong>options</strong> :</p>
+  <pre><code>--title "Titre de la présentation"
+--transition  fade | slide | zoom | convex | none
+--slide-number           affiche le numéro de slide
+--no-source-styles       ignore le CSS des pages source
+--reveal-theme white     surcharge le thème Reveal.js</code></pre>
+</body>
+</html>

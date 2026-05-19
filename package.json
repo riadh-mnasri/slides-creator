@@ -1,0 +1,16 @@
+{
+  "name": "slides-creator",
+  "version": "1.0.0",
+  "description": "Generate a Reveal.js presentation from HTML pages",
+  "main": "slides-creator.js",
+  "bin": {
+    "slides-creator": "./slides-creator.js"
+  },
+  "scripts": {
+    "start": "node slides-creator.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "commander": "^12.0.0"
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Architecture</title>
+</head>
+<body>
+  <h3>Aperçu technique</h3>
+  <h2>Architecture de l'outil</h2>
+
+  <ul>
+    <li><strong>Parsing HTML</strong> — extraction du contenu avec Cheerio
+      <ul>
+        <li>Corps de la page (<code>&lt;body&gt;</code>)</li>
+        <li>Styles inline et fichiers CSS relatifs</li>
+      </ul>
+    </li>
+    <li><strong>Scoping CSS</strong> — isolation des styles par slide
+      <ul>
+        <li>Les règles <code>body</code> / <code>html</code> sont filtrées</li>
+        <li>Sélecteurs préfixés par <code>[data-slide-id]</code></li>
+      </ul>
+    </li>
+    <li><strong>Rendu Reveal.js</strong> — présentation HTML autonome
+      <ul>
+        <li>Chargé via CDN, aucune dépendance locale pour visionner</li>
+        <li>Thème élégant injecté en priorité</li>
+      </ul>
+    </li>
+  </ul>
+</body>
+</html>

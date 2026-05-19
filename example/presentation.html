@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Slides Creator — Demo</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  
+
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+  /* Viewport */
+  .reveal-viewport { background: #f8fafc; }
+
+  /* Progress bar */
+  .reveal .progress {
+    background: rgba(30, 58, 138, 0.08);
+    height: 3px;
+  }
+  .reveal .progress span {
+    background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+    border-radius: 0 2px 2px 0;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Slide layout */
+  .reveal .slides section {
+    height: 100%;
+    top: 0 !important;
+    display: flex !important;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 0;
+  }
+
+  .slide-inner {
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 60px 80px;
+    overflow: auto;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: clamp(14px, 1.55vw, 17px);
+    line-height: 1.75;
+    color: #1e293b;
+    background: #f8fafc;
+  }
+
+  /* Entrance animation */
+  .reveal .slides section.present .slide-inner {
+    animation: elegantEnter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes elegantEnter {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Typography ─────────────────────────────────── */
+  .slide-inner h1,
+  .slide-inner h2 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    color: #1e3a8a;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.55em;
+    font-weight: 700;
+  }
+  .slide-inner h1 { font-size: 2.7em; }
+  .slide-inner h2 { font-size: 2em; }
+  .slide-inner h3 {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #1e3a8a;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.8em;
+    opacity: 0.75;
+  }
+  .slide-inner p {
+    margin: 0 0 1em;
+    max-width: 70ch;
+    color: #374151;
+  }
+  .slide-inner strong { color: #1e3a8a; font-weight: 600; }
+  .slide-inner em { font-style: italic; color: #4b5563; }
+
+  /* ── Links ──────────────────────────────────────── */
+  .slide-inner a {
+    color: #1d4ed8;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(29, 78, 216, 0.25);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .slide-inner a:hover {
+    color: #1e3a8a;
+    border-bottom-color: #1e3a8a;
+  }
+
+  /* ── Lists ──────────────────────────────────────── */
+
+  /* --- Unordered lists --- */
+  .slide-inner ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.2em;
+  }
+  .slide-inner ul > li {
+    position: relative;
+    padding-left: 1.55em;
+    margin-bottom: 0.72em;
+    color: #374151;
+    line-height: 1.65;
+  }
+  /* Filled circle bullet */
+  .slide-inner ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.52em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #1e3a8a;
+    flex-shrink: 0;
+  }
+
+  /* Nested ul — hollow circle, lighter blue */
+  .slide-inner ul ul {
+    margin-top: 0.5em;
+    margin-bottom: 0.2em;
+    padding-left: 0.4em;
+  }
+  .slide-inner ul ul > li::before {
+    background: transparent;
+    border: 1.5px solid #93c5fd;
+    width: 5px;
+    height: 5px;
+    top: 0.55em;
+  }
+
+  /* --- Ordered lists --- */
+  .slide-inner ol {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.2em;
+    counter-reset: slide-ol;
+  }
+  .slide-inner ol > li {
+    position: relative;
+    padding-left: 2.1em;
+    margin-bottom: 0.72em;
+    color: #374151;
+    line-height: 1.65;
+    counter-increment: slide-ol;
+  }
+  .slide-inner ol > li::before {
+    content: counter(slide-ol, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #1e3a8a;
+    font-weight: 700;
+    font-size: 0.72em;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    line-height: 2.1;
+    min-width: 1.6em;
+  }
+
+  /* --- Staggered entrance per li --- */
+  .reveal .slides section.present .slide-inner li {
+    opacity: 0;
+    animation: liEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes liEnter {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .reveal .slides section.present .slide-inner li:nth-child(1) { animation-delay: 0.15s; }
+  .reveal .slides section.present .slide-inner li:nth-child(2) { animation-delay: 0.25s; }
+  .reveal .slides section.present .slide-inner li:nth-child(3) { animation-delay: 0.35s; }
+  .reveal .slides section.present .slide-inner li:nth-child(4) { animation-delay: 0.44s; }
+  .reveal .slides section.present .slide-inner li:nth-child(5) { animation-delay: 0.52s; }
+  .reveal .slides section.present .slide-inner li:nth-child(6) { animation-delay: 0.59s; }
+  .reveal .slides section.present .slide-inner li:nth-child(7) { animation-delay: 0.65s; }
+  .reveal .slides section.present .slide-inner li:nth-child(8) { animation-delay: 0.70s; }
+
+  /* ── Code ───────────────────────────────────────── */
+  .slide-inner code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.82em;
+    font-weight: 500;
+  }
+  .slide-inner pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 22px 28px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.8em;
+    line-height: 1.65;
+    margin: 0 0 1.2em;
+    box-shadow: 0 4px 28px rgba(15, 23, 42, 0.14);
+  }
+  .slide-inner pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 1em;
+    border-radius: 0;
+  }
+
+  /* ── Tables ─────────────────────────────────────── */
+  .slide-inner table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88em;
+    margin-bottom: 1.2em;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 8px rgba(30, 58, 138, 0.07);
+  }
+  .slide-inner th {
+    background: #1e3a8a;
+    color: #fff;
+    padding: 11px 18px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 0.85em;
+  }
+  .slide-inner td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #374151;
+  }
+  .slide-inner tr:last-child td { border-bottom: none; }
+  .slide-inner tbody tr:nth-child(even) td { background: #f8fafc; }
+  .slide-inner tbody tr:hover td { background: #eff6ff; transition: background 0.15s; }
+
+  /* ── Blockquote ─────────────────────────────────── */
+  .slide-inner blockquote {
+    border-left: 3px solid #1e3a8a;
+    margin: 0 0 1.2em;
+    padding: 10px 22px;
+    background: #eff6ff;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #374151;
+  }
+
+  /* ── Divider ────────────────────────────────────── */
+  .slide-inner hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 1.6em 0;
+  }
+
+  /* ── Images ─────────────────────────────────────── */
+  .slide-inner img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
+  }
+
+  /* ── Accent chip (utility class) ────────────────── */
+  .slide-inner .chip,
+  .slide-inner .badge,
+  .slide-inner .tag {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid rgba(29, 78, 216, 0.2);
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Slide number ───────────────────────────────── */
+  .reveal .slide-number {
+    background: transparent;
+    color: rgba(30, 58, 138, 0.35);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    bottom: 16px;
+    right: 20px;
+  }
+
+
+    /* ── Per-slide source styles (scoped) ── */
+    
+
+
+
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-slide-id="01-intro">
+      <div class="slide-inner"><h3>Slides Creator</h3>
+  <h1>Générez des présentations<br>élégantes depuis vos pages HTML</h1>
+  <p>Un fichier HTML par slide. Vos styles préservés. Un rendu professionnel, immédiatement.</p>
+  <hr>
+  <p>Naviguez avec <strong>← →</strong> ou la barre espace.</p></div>
+    </section>
+    <section data-slide-id="02-features">
+      <div class="slide-inner"><h3>Ce que fait l'outil</h3>
+  <h2>Fonctionnalités clés</h2>
+
+  <ul>
+    <li>Un fichier HTML par slide, triés alphabétiquement ou dans l'ordre de votre choix</li>
+    <li>Styles CSS <strong>scopés par slide</strong> — zéro conflit entre les pages</li>
+    <li>Feuilles de style externes inlinées automatiquement</li>
+    <li>Typographie premium : <strong>Inter</strong> + <strong>Playfair Display</strong> via Google Fonts</li>
+    <li>Transitions et animations configurables</li>
+    <li>Fichier de sortie autonome, aucune installation pour le visionner</li>
+  </ul></div>
+    </section>
+    <section data-slide-id="03-usage">
+      <div class="slide-inner"><h3>Guide rapide</h3>
+  <h2>Comment utiliser</h2>
+
+  <p>Depuis un <strong>dossier</strong> (trié alphabétiquement) :</p>
+  <pre><code>node slides-creator.js --input ./mes-pages --output slides.html</code></pre>
+
+  <p>Avec des <strong>fichiers explicites</strong> (ordre libre) :</p>
+  <pre><code>node slides-creator.js intro.html methode.html conclusion.html</code></pre>
+
+  <p>Toutes les <strong>options</strong> :</p>
+  <pre><code>--title "Titre de la présentation"
+--transition  fade | slide | zoom | convex | none
+--slide-number           affiche le numéro de slide
+--no-source-styles       ignore le CSS des pages source
+--reveal-theme white     surcharge le thème Reveal.js</code></pre></div>
+    </section>
+    <section data-slide-id="04-quote">
+      <div class="slide-inner"><h3>Philosophie</h3>
+  <h2>Pourquoi HTML comme source ?</h2>
+
+  <blockquote>
+    HTML est le format de contenu le plus universel qui existe. Tout le monde sait l'écrire,
+    tout éditeur le comprend, et tout navigateur le rend fidèlement.
+  </blockquote>
+
+  <p>Plutôt que d'imposer un format propriétaire, <strong>Slides Creator</strong> prend ce que vous avez déjà
+  et le transforme en présentation professionnelle — sans friction.</p>
+
+  <hr>
+
+  <ul>
+    <li>Vos pages web existantes deviennent des slides</li>
+    <li>Votre CMS, votre documentation, vos exports HTML sont compatibles</li>
+    <li>Le résultat s'ouvre dans n'importe quel navigateur</li>
+  </ul></div>
+    </section>
+    <section data-slide-id="05-methode">
+      <div class="slide-inner"><h3>Processus</h3>
+  <h2>Comment nous travaillons</h2>
+
+  <ol>
+    <li><strong>Analyse</strong> — Audit des pages HTML existantes et identification des contenus clés</li>
+    <li><strong>Structuration</strong> — Organisation logique des slides et hiérarchie de l'information</li>
+    <li><strong>Génération</strong> — Production du fichier de présentation en une commande</li>
+    <li><strong>Itération</strong> — Ajustements rapides grâce au rechargement instantané</li>
+  </ol>
+
+  <p>Chaque étape prend <strong>moins de 5 minutes</strong> pour une présentation de 20 slides.</p></div>
+    </section>
+    <section data-slide-id="06-nested">
+      <div class="slide-inner"><h3>Aperçu technique</h3>
+  <h2>Architecture de l'outil</h2>
+
+  <ul>
+    <li><strong>Parsing HTML</strong> — extraction du contenu avec Cheerio
+      <ul>
+        <li>Corps de la page (<code>&lt;body&gt;</code>)</li>
+        <li>Styles inline et fichiers CSS relatifs</li>
+      </ul>
+    </li>
+    <li><strong>Scoping CSS</strong> — isolation des styles par slide
+      <ul>
+        <li>Les règles <code>body</code> / <code>html</code> sont filtrées</li>
+        <li>Sélecteurs préfixés par <code>[data-slide-id]</code></li>
+      </ul>
+    </li>
+    <li><strong>Rendu Reveal.js</strong> — présentation HTML autonome
+      <ul>
+        <li>Chargé via CDN, aucune dépendance locale pour visionner</li>
+        <li>Thème élégant injecté en priorité</li>
+      </ul>
+    </li>
+  </ul></div>
+    </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'fade',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      slideNumber: 'c/t',
+      controls: false,
+      controlsTutorial: false,
+      progress: true,
+      center: false,
+      width: '100%',
+      height: '100%',
+      margin: 0,
+      minScale: 1,
+      maxScale: 1,
+    });
+  </script>
+</body>
+</html>
